@@ -14,7 +14,6 @@ def log_message():
     logger.warning("warning message from week_calculator.py")
 
 
-
 def get_week_of_month(year, month, day):
     first_day_of_month = datetime.date(year, month, 1)
     first_day_weekday = first_day_of_month.weekday()  # weekday()で曜日を取得してる。月曜日が０、火曜日が１・・・
