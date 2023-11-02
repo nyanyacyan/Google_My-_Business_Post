@@ -3,6 +3,7 @@ import pretty_errors
 from tqdm import tqdm
 from rich import print
 import datetime
+import calendar
 
 pretty_errors.activate
 
@@ -15,14 +16,18 @@ def log_message():
 
 
 def get_week_of_month(year, month, day):
-    first_day_of_month = datetime.date(year, month, 1)
-    first_day_weekday = first_day_of_month.weekday()  # weekday()で曜日を取得してる。月曜日が０、火曜日が１・・・
+    '''
+    現在の月が何週あるかを出力する関数
+    calendarモジュールを使うと日曜日始まり。
+    カレンダーでweekリストを作成
+    index（０からスタート）に１をプラスすることで週数を割り出す。
+    '''
+    month_calendar = calendar.monthcalendar(year, month)
+    for index, week in enumerate(month_calendar):
+        if day in week:
+            return index + 1
 
-    print(first_day_weekday)  # 曜日を出力
+today = datetime.date.today()
 
-    week_of_month = ((day + first_day_weekday)// 7) + (1 if (day + first_day_weekday)% 7 > 0 else 0)
-    return week_of_month
-
-date = datetime.date.today()
-week_of_month = get_week_of_month(date.year, date.month, date.day)
-print(f'{date}は{week_of_month}の週です。')
+# 今日の日付がその月の何週目かを数値にて出力
+week_of_month = get_week_of_month(today.year, today.month, today.day)
